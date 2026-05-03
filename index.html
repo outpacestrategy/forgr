@@ -576,6 +576,132 @@
     .ip-apply { background: var(--accent); color: var(--bg); }
     .ip-skip { background: transparent; color: var(--text-secondary); border: 1px solid var(--border); }
 
+    /* iPhone — Movement library (card 3) */
+    .ip-mov-search {
+      margin: 8px 10px 6px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 5px 8px;
+      font-size: 8px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .ip-mov-search::before {
+      content: '⌕';
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+    .ip-featured {
+      margin: 4px 10px 8px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .ip-demo {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      background:
+        radial-gradient(120% 80% at 50% 40%, rgba(240, 229, 75, 0.06) 0%, transparent 60%),
+        linear-gradient(135deg, #1a2230 0%, #0B0F14 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .ip-play-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      color: var(--text-primary);
+      padding-left: 2px;
+    }
+    .ip-loop-tag {
+      position: absolute;
+      bottom: 5px;
+      left: 5px;
+      background: rgba(0, 0, 0, 0.55);
+      border-radius: 3px;
+      padding: 2px 5px;
+      font-size: 6.5px;
+      font-weight: 600;
+      color: var(--text-primary);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .ip-hyrox-tag {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background: var(--accent);
+      color: var(--bg);
+      border-radius: 3px;
+      padding: 1px 5px;
+      font-size: 6.5px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+    }
+    .ip-featured-body { padding: 7px 10px 9px; }
+    .ip-featured-name { font-size: 10.5px; font-weight: 700; margin-bottom: 5px; letter-spacing: -0.005em; }
+    .ip-cues { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 3px; }
+    .ip-cues li {
+      font-size: 7.5px;
+      color: var(--text-secondary);
+      line-height: 1.4;
+      padding-left: 9px;
+      position: relative;
+    }
+    .ip-cues li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 5px;
+      width: 4px;
+      height: 1px;
+      background: var(--accent);
+    }
+    .ip-mov-list { padding: 0 10px 10px; display: flex; flex-direction: column; }
+    .ip-mov-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(31, 41, 55, 0.4);
+    }
+    .ip-mov-item:last-child { border-bottom: none; }
+    .ip-mov-thumb {
+      width: 24px;
+      height: 24px;
+      border-radius: 5px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--accent);
+      flex-shrink: 0;
+      letter-spacing: -0.02em;
+    }
+    .ip-mov-name { flex: 1; font-size: 8.5px; font-weight: 600; }
+    .ip-mov-tag {
+      font-size: 6.5px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      font-weight: 700;
+    }
+
     /* ---------- Fit check ---------- */
     .fit-sub {
       color: var(--text-secondary);
@@ -1225,6 +1351,65 @@
             <p>An athlete misses Tuesday's threshold. Open the app. See three suggested rebalances with reasoning. Tap to approve. The plan updates. The athlete gets pinged. You go back to coaching.</p>
           </div>
           <div class="card">
+            <div class="iphone-mock" aria-hidden="true">
+              <div class="iphone-frame">
+                <div class="iphone-screen">
+                  <div class="ip-statusbar">
+                    <span class="ip-time">9:41</span>
+                    <span class="ip-icons">
+                      <svg viewBox="0 0 18 10"><rect x="0" y="6" width="3" height="4" rx="0.5"/><rect x="4" y="4" width="3" height="6" rx="0.5"/><rect x="8" y="2" width="3" height="8" rx="0.5"/><rect x="12" y="0" width="3" height="10" rx="0.5"/></svg>
+                      <svg viewBox="0 0 14 10"><path d="M7 0a9 9 0 0 0-7 3.4l1 1A7.5 7.5 0 0 1 7 1.5a7.5 7.5 0 0 1 6 2.9l1-1A9 9 0 0 0 7 0Zm0 3a6 6 0 0 0-4.6 2.2l1 1A4.5 4.5 0 0 1 7 4.5a4.5 4.5 0 0 1 3.6 1.7l1-1A6 6 0 0 0 7 3Zm0 3a3 3 0 0 0-2.2 1l2.2 2.2L9.2 7A3 3 0 0 0 7 6Z"/></svg>
+                      <svg viewBox="0 0 18 10"><rect x="0.5" y="0.5" width="14" height="9" rx="2" fill="none" stroke="currentColor" stroke-width="1"/><rect x="2" y="2" width="11" height="6" rx="1"/><rect x="15" y="3" width="1.5" height="4" rx="0.5"/></svg>
+                    </span>
+                  </div>
+                  <div class="ip-header">
+                    <div class="ip-back">‹</div>
+                    <div class="ip-title-block">
+                      <div class="ip-name">Movements</div>
+                      <div class="ip-week-label">52 in library</div>
+                    </div>
+                  </div>
+                  <div class="ip-mov-search">Search movements</div>
+                  <div class="ip-featured">
+                    <div class="ip-demo">
+                      <div class="ip-play-btn">▶</div>
+                      <div class="ip-loop-tag">Loop · 0:04</div>
+                      <div class="ip-hyrox-tag">HYROX</div>
+                    </div>
+                    <div class="ip-featured-body">
+                      <div class="ip-featured-name">Sled Push</div>
+                      <ul class="ip-cues">
+                        <li>Drive through midfoot, not toes.</li>
+                        <li>Hips low, chest tall, neutral neck.</li>
+                        <li>Push the sled — don't lean on it.</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="ip-mov-list">
+                    <div class="ip-mov-item">
+                      <div class="ip-mov-thumb">SP</div>
+                      <div class="ip-mov-name">Sled Pull</div>
+                      <div class="ip-mov-tag">Hyrox</div>
+                    </div>
+                    <div class="ip-mov-item">
+                      <div class="ip-mov-thumb">BB</div>
+                      <div class="ip-mov-name">Burpee Broad Jump</div>
+                      <div class="ip-mov-tag">Hyrox</div>
+                    </div>
+                    <div class="ip-mov-item">
+                      <div class="ip-mov-thumb">WB</div>
+                      <div class="ip-mov-name">Wall Ball</div>
+                      <div class="ip-mov-tag">Hyrox</div>
+                    </div>
+                    <div class="ip-mov-item">
+                      <div class="ip-mov-thumb">SL</div>
+                      <div class="ip-mov-name">Sandbag Lunge</div>
+                      <div class="ip-mov-tag">Hyrox</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
             <h3>Movement library, demos that don't embarrass you</h3>
             <p>50+ Hyrox and hybrid movements with clean, looping animated demos. Three coaching cues per movement, overridable per athlete. No more "Google sandbag lunges, see what comes up."</p>
           </div>
