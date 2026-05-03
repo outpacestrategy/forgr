@@ -702,6 +702,60 @@
       font-weight: 700;
     }
 
+    /* iPhone — Connections (card 4) */
+    .ip-conn-section {
+      padding: 8px 12px 4px;
+      font-size: 7px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+    .ip-conn-list { padding: 0 10px; display: flex; flex-direction: column; }
+    .ip-conn-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 2px;
+      border-bottom: 1px solid rgba(31, 41, 55, 0.4);
+    }
+    .ip-conn-item:last-child { border-bottom: none; }
+    .ip-conn-logo {
+      width: 22px;
+      height: 22px;
+      border-radius: 5px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--text-primary);
+      flex-shrink: 0;
+      letter-spacing: -0.02em;
+    }
+    .ip-conn-info { flex: 1; min-width: 0; }
+    .ip-conn-name { font-size: 8.5px; font-weight: 700; letter-spacing: -0.005em; }
+    .ip-conn-sync { font-size: 6.5px; color: var(--text-muted); margin-top: 1px; }
+    .ip-conn-status { font-size: 7px; font-weight: 700; }
+    .ip-conn-on {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      color: var(--success);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .ip-conn-on::before {
+      content: '';
+      width: 5px; height: 5px;
+      border-radius: 999px;
+      background: var(--success);
+      box-shadow: 0 0 0 2px rgba(91, 255, 140, 0.18);
+    }
+    .ip-conn-add { color: var(--accent); }
+
     /* ---------- Fit check ---------- */
     .fit-sub {
       color: var(--text-secondary);
@@ -1414,8 +1468,83 @@
             <p>50+ Hyrox and hybrid movements with clean, looping animated demos. Three coaching cues per movement, overridable per athlete. No more "Google sandbag lunges, see what comes up."</p>
           </div>
           <div class="card">
+            <div class="iphone-mock" aria-hidden="true">
+              <div class="iphone-frame">
+                <div class="iphone-screen">
+                  <div class="ip-statusbar">
+                    <span class="ip-time">9:41</span>
+                    <span class="ip-icons">
+                      <svg viewBox="0 0 18 10"><rect x="0" y="6" width="3" height="4" rx="0.5"/><rect x="4" y="4" width="3" height="6" rx="0.5"/><rect x="8" y="2" width="3" height="8" rx="0.5"/><rect x="12" y="0" width="3" height="10" rx="0.5"/></svg>
+                      <svg viewBox="0 0 14 10"><path d="M7 0a9 9 0 0 0-7 3.4l1 1A7.5 7.5 0 0 1 7 1.5a7.5 7.5 0 0 1 6 2.9l1-1A9 9 0 0 0 7 0Zm0 3a6 6 0 0 0-4.6 2.2l1 1A4.5 4.5 0 0 1 7 4.5a4.5 4.5 0 0 1 3.6 1.7l1-1A6 6 0 0 0 7 3Zm0 3a3 3 0 0 0-2.2 1l2.2 2.2L9.2 7A3 3 0 0 0 7 6Z"/></svg>
+                      <svg viewBox="0 0 18 10"><rect x="0.5" y="0.5" width="14" height="9" rx="2" fill="none" stroke="currentColor" stroke-width="1"/><rect x="2" y="2" width="11" height="6" rx="1"/><rect x="15" y="3" width="1.5" height="4" rx="0.5"/></svg>
+                    </span>
+                  </div>
+                  <div class="ip-header">
+                    <div class="ip-back">‹</div>
+                    <div class="ip-title-block">
+                      <div class="ip-name">Connections</div>
+                      <div class="ip-week-label">Maria Chen</div>
+                    </div>
+                  </div>
+                  <div class="ip-conn-section">Connected · 2</div>
+                  <div class="ip-conn-list">
+                    <div class="ip-conn-item">
+                      <div class="ip-conn-logo">G</div>
+                      <div class="ip-conn-info">
+                        <div class="ip-conn-name">Garmin Connect</div>
+                        <div class="ip-conn-sync">Last sync 2m ago</div>
+                      </div>
+                      <span class="ip-conn-status ip-conn-on">On</span>
+                    </div>
+                    <div class="ip-conn-item">
+                      <div class="ip-conn-logo">S</div>
+                      <div class="ip-conn-info">
+                        <div class="ip-conn-name">Strava</div>
+                        <div class="ip-conn-sync">Last sync 14m ago</div>
+                      </div>
+                      <span class="ip-conn-status ip-conn-on">On</span>
+                    </div>
+                  </div>
+                  <div class="ip-conn-section">Available</div>
+                  <div class="ip-conn-list">
+                    <div class="ip-conn-item">
+                      <div class="ip-conn-logo">A</div>
+                      <div class="ip-conn-info">
+                        <div class="ip-conn-name">Apple Watch</div>
+                        <div class="ip-conn-sync">HealthKit</div>
+                      </div>
+                      <span class="ip-conn-status ip-conn-add">+ Add</span>
+                    </div>
+                    <div class="ip-conn-item">
+                      <div class="ip-conn-logo">C</div>
+                      <div class="ip-conn-info">
+                        <div class="ip-conn-name">Coros</div>
+                        <div class="ip-conn-sync">Watch sync</div>
+                      </div>
+                      <span class="ip-conn-status ip-conn-add">+ Add</span>
+                    </div>
+                    <div class="ip-conn-item">
+                      <div class="ip-conn-logo">P</div>
+                      <div class="ip-conn-info">
+                        <div class="ip-conn-name">Polar</div>
+                        <div class="ip-conn-sync">Watch sync</div>
+                      </div>
+                      <span class="ip-conn-status ip-conn-add">+ Add</span>
+                    </div>
+                    <div class="ip-conn-item">
+                      <div class="ip-conn-logo">W</div>
+                      <div class="ip-conn-info">
+                        <div class="ip-conn-name">Whoop</div>
+                        <div class="ip-conn-sync">Recovery + strain</div>
+                      </div>
+                      <span class="ip-conn-status ip-conn-add">+ Add</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
             <h3>Wearable-agnostic</h3>
-            <p>Garmin and Strava in v1. Apple Watch, Coros, Polar, Whoop on the roadmap. Your athletes wear what they wear. Your view stays unified.</p>
+            <p>Garmin and Strava sync today. Apple Watch, Coros, Polar, and Whoop coming soon. Your athletes wear what they wear. Your view stays unified.</p>
           </div>
         </div>
       </div>
