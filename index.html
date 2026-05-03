@@ -332,6 +332,59 @@
     }
     .card p { margin-bottom: 0; font-size: 15px; line-height: 1.5; }
 
+    /* ---------- Fit check ---------- */
+    .fit-sub {
+      color: var(--text-secondary);
+      font-size: 17px;
+      max-width: 720px;
+      margin: 0 0 32px;
+    }
+    .fit-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-top: 32px;
+    }
+    @media (min-width: 768px) { .fit-grid { grid-template-columns: 1fr 1fr; gap: 20px; } }
+    .fit-col {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 24px;
+    }
+    .fit-col h3 {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin: 0 0 20px;
+      color: var(--text-primary);
+    }
+    .fit-col h3 em { font-style: italic; color: var(--accent); font-weight: 700; }
+    .fit-col ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .fit-col li {
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--text-secondary);
+      padding-left: 16px;
+      position: relative;
+    }
+    .fit-col li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.65em;
+      width: 6px;
+      height: 1px;
+      background: var(--text-muted);
+    }
+
     /* ---------- Numbers callout ---------- */
     .data-callout {
       background: var(--surface);
@@ -844,6 +897,35 @@
           </div>
         </div>
         <p class="pricing-fineprint">20% off annual. No per-athlete fees. No revenue cut. Cancel anytime.</p>
+      </div>
+    </section>
+
+    <!-- 5b. Honest fit check -->
+    <section id="fit-check">
+      <div class="container">
+        <div class="label">Honest fit check</div>
+        <h2>Forgr is not for everyone.</h2>
+        <p class="fit-sub">Forgr makes you faster, not optional.</p>
+
+        <div class="fit-grid">
+          <div class="fit-col">
+            <h3>Forgr <em>is</em> for you if...</h3>
+            <ul>
+              <li>You coach 15 to 60 Hyrox or hybrid athletes and you're losing an hour a day to admin.</li>
+              <li>Your athletes show up wearing five different watch brands and you're tired of asking them to screenshot data.</li>
+              <li>You want AI to draft next week, not write the whole season.</li>
+            </ul>
+          </div>
+
+          <div class="fit-col">
+            <h3>Forgr is <em>not</em> for you if...</h3>
+            <ul>
+              <li>You're an athlete looking for a self-coached plan. (Try Edge or RoxHype.)</li>
+              <li>You sell pre-built programs to thousands of buyers. (FITR's storefront is better at that.)</li>
+              <li>You coach general strength or CrossFit and Hyrox is a small slice.</li>
+            </ul>
+          </div>
+        </div>
       </div>
     </section>
 
