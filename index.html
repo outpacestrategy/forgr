@@ -1034,29 +1034,54 @@
     @media (min-width: 1024px) { .hero-block { padding: 120px 0 96px; } }
 
     .hero-headline {
-      font-size: clamp(28px, 5.6vw, 68px);
+      font-size: clamp(36px, 6.4vw, 76px);
       font-weight: 700;
       letter-spacing: -0.025em;
-      line-height: 1.08;
+      line-height: 1.04;
       margin: 0 auto 24px;
-      max-width: 22ch;
+      max-width: 14ch;
       color: var(--text-primary);
-      text-wrap: balance;
-    }
-    .hero-headline em {
-      font-style: italic;
-      font-weight: inherit;
-      color: var(--accent);
     }
 
     .hero-sub {
       font-size: clamp(16px, 1.6vw, 22px);
       color: var(--text-secondary);
-      max-width: 42rem;
+      max-width: 38rem;
       margin: 0 auto 36px;
       line-height: 1.5;
     }
     .hero-sub strong { color: var(--text-primary); font-weight: 600; }
+
+    /* ---------- Stack positioning section ---------- */
+    .stack-block {
+      padding: 80px 0 88px;
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+    @media (min-width: 768px) { .stack-block { padding: 112px 0 120px; } }
+    .stack-headline {
+      font-size: clamp(28px, 4.8vw, 56px);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      line-height: 1.1;
+      margin: 0 auto 24px;
+      max-width: 22ch;
+      color: var(--text-primary);
+      text-wrap: balance;
+    }
+    .stack-headline em {
+      font-style: italic;
+      font-weight: inherit;
+      color: var(--accent);
+    }
+    .stack-sub {
+      font-size: clamp(16px, 1.5vw, 20px);
+      color: var(--text-secondary);
+      max-width: 42rem;
+      margin: 0 auto;
+      line-height: 1.55;
+    }
+    .stack-sub strong { color: var(--text-primary); font-weight: 600; }
 
     .hero-cta-row {
       display: flex;
@@ -1214,13 +1239,9 @@
 
       <!-- Hero content -->
       <section id="top" class="hero-block" aria-label="Hero">
-        <h1 class="hero-headline fade-up fade-up-2">
-          Garmin makes the watch.<br />
-          Strava holds the data.<br />
-          <em>Forgr is where Hyrox coaches build their business.</em>
-        </h1>
+        <h1 class="hero-headline fade-up fade-up-2">The All-In-One Coaching Platform For Hybrid Athletes.</h1>
         <p class="hero-sub fade-up fade-up-3">
-          The coaching OS for <strong>Hyrox coaches</strong> running 15 to 60 athletes — in-person, online, or both. Without the spreadsheet, the WhatsApp threads, or the <strong>shared FITR login</strong>.
+          Hyrox-native. <strong>Hybrid programming</strong> in one weekly view. AI-assisted plan adjustments. <strong>Wearable-agnostic</strong>.
         </p>
       </section>
     </div>
@@ -1240,6 +1261,20 @@
         />
       </div>
     </div>
+
+    <!-- 1b. Positioning stack -->
+    <section class="stack-block" aria-label="Positioning">
+      <div class="container">
+        <h2 class="stack-headline">
+          Garmin makes the watch.<br />
+          Strava holds the data.<br />
+          <em>Forgr is where Hyrox coaches build their business.</em>
+        </h2>
+        <p class="stack-sub">
+          The coaching OS for <strong>Hyrox coaches</strong> running 15 to 60 athletes — in-person, online, or both. Without the spreadsheet, the WhatsApp threads, or the <strong>shared FITR login</strong>.
+        </p>
+      </div>
+    </section>
 
     <!-- 2. Problem -->
     <section>
