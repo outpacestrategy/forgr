@@ -247,10 +247,22 @@
     .email-form {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 8px;
       max-width: 480px;
     }
-    @media (min-width: 600px) { .email-form { flex-direction: row; gap: 8px; } }
+    .email-form .qualifiers {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    @media (min-width: 600px) { .email-form .qualifiers { flex-direction: row; } }
+    .email-form .qualifiers select { flex: 1; min-width: 0; }
+    .email-form .email-row {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    @media (min-width: 600px) { .email-form .email-row { flex-direction: row; } }
     .email-form input[type="email"] {
       flex: 1;
       background: var(--surface);
@@ -270,6 +282,33 @@
       border-color: var(--accent);
       box-shadow: 0 0 0 3px rgba(240, 229, 75, 0.15);
     }
+    .email-form select {
+      background: var(--surface);
+      border: 1px solid var(--border-strong);
+      border-radius: 8px;
+      padding: 13px 40px 13px 16px;
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 16px;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath fill='%239AA5B1' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      background-size: 12px;
+      cursor: pointer;
+      transition: border-color 150ms var(--ease);
+    }
+    .email-form select:hover { border-color: #364152; }
+    .email-form select:focus,
+    .email-form select:focus-visible {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(240, 229, 75, 0.15);
+    }
+    .email-form select:required:invalid { color: var(--text-muted); }
+    .email-form select option { background: var(--surface); color: var(--text-primary); }
+    .email-form select option[disabled] { color: var(--text-muted); }
 
     .btn {
       display: inline-flex;
@@ -958,13 +997,39 @@
           <h2>If your week has both run and lift in it, this is for you.</h2>
           <form class="email-form" name="early-access" method="POST" action="/?subscribed=1" data-netlify="true" data-netlify-honeypot="bot-field">
             <input type="hidden" name="form-name" value="early-access" />
-            <label for="email-footer" class="visually-hidden">Email address</label>
-            <input id="email-footer" type="email" name="email" required placeholder="you@yourgym.com" autocomplete="email" />
+
+            <div class="qualifiers">
+              <label for="athletes" class="visually-hidden">Athletes coached</label>
+              <select id="athletes" name="athletes" required>
+                <option value="" disabled selected>Athletes coached</option>
+                <option value="under-10">Under 10</option>
+                <option value="10-25">10–25</option>
+                <option value="25-60">25–60</option>
+                <option value="60-plus">60+</option>
+              </select>
+
+              <label for="setup" class="visually-hidden">Current setup</label>
+              <select id="setup" name="setup" required>
+                <option value="" disabled selected>Current setup</option>
+                <option value="FITR">FITR</option>
+                <option value="TrainingPeaks">TrainingPeaks</option>
+                <option value="TrueCoach">TrueCoach</option>
+                <option value="spreadsheet">Spreadsheet</option>
+                <option value="none">No tool yet</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <div class="email-row">
+              <label for="email-footer" class="visually-hidden">Email address</label>
+              <input id="email-footer" type="email" name="email" required placeholder="you@yourgym.com" autocomplete="email" />
+              <button class="btn" type="submit">Get early access</button>
+            </div>
+
             <input type="text" name="bot-field" tabindex="-1" autocomplete="off" class="honey" aria-hidden="true" />
             <input type="hidden" name="source" value="second" />
-            <button class="btn" type="submit">Get early access</button>
           </form>
-          <p class="form-fineprint" style="margin-top: 16px; margin-left: auto; margin-right: auto; max-width: 480px;">We won't send marketing email. You'll hear from us when the alpha opens — 8–12 weeks out.</p>
+          <p class="form-fineprint" style="margin-top: 16px; margin-left: auto; margin-right: auto; max-width: 480px;">Forgr isn't built yet. We're testing interest before development. You'll hear from us when there's something to show — not before.</p>
         </div>
       </div>
     </section>
