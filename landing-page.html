@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Forgr — the coaching platform built for hybrid athletes</title>
+  <meta name="description" content="A modern coach CMS for Hyrox and hybrid coaches. AI-assisted weekly plan adjustments. Wearable-agnostic. $99/mo flat. Limited beta opening soon." />
+
+  <meta property="og:title" content="Forgr — the coaching platform built for hybrid athletes" />
+  <meta property="og:description" content="A modern coach CMS for Hyrox and hybrid coaches. AI-assisted weekly plan adjustments. Wearable-agnostic. $99/mo flat." />
+  <meta property="og:image" content="/og.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://forgr.coach/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="theme-color" content="#0B0F14" />
+
+  <link rel="icon" type="image/svg+xml" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="18" fill="%230B0F14"/><path d="M20 20 L66 20 L84 38 L84 44 L38 44 L38 54 L62 54 L62 66 L38 66 L38 82 L20 82 Z" fill="%23F0E54B"/></svg>' />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
+
+  <!-- PostHog: replace YOUR_POSTHOG_KEY before deploying. Until then, this is inert. -->
+  <!--
+  <script>
+    !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys getNextSurveyStep onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+    posthog.init('YOUR_POSTHOG_KEY', {api_host:'https://us.i.posthog.com', person_profiles:'identified_only'});
+  </script>
+  -->
+
+  <style>
+    /* ---------- Design tokens (from visual-direction.md) ---------- */
+    :root {
+      --bg: #0B0F14;
+      --surface: #131922;
+      --surface-2: #1A2230;
+      --border: #1F2937;
+      --border-strong: #2A3444;
+      --text-primary: #F4F5F7;
+      --text-secondary: #9AA5B1;
+      --text-muted: #5C6675;
+      --accent: #F0E54B;
+      --accent-hover: #F8EE5E;
+      --accent-press: #DDD13B;
+      --success: #5BFF8C;
+      --danger: #FF3B30;
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+      --max: 1080px;
+    }
+
+    /* ---------- Reset ---------- */
+    *, *::before, *::after { box-sizing: border-box; }
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+      background: var(--bg);
+    }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text-primary);
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 16px;
+      line-height: 1.55;
+      font-feature-settings: 'cv11', 'ss01';
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+    img, svg { display: block; max-width: 100%; }
+    button { font-family: inherit; cursor: pointer; }
+    a { color: inherit; text-decoration: none; transition: color 150ms var(--ease); }
+    a:hover { color: var(--accent); }
+    a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* ---------- Layout ---------- */
+    .container { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+    @media (min-width: 768px) { .container { padding: 0 40px; } }
+
+    section { padding: 64px 0; }
+    @media (min-width: 768px) { section { padding: 96px 0; } }
+
+    /* ---------- Type ---------- */
+    h1, h2, h3 { font-weight: 600; letter-spacing: -0.015em; line-height: 1.1; margin: 0; }
+    h1.hero {
+      font-size: clamp(36px, 6vw, 64px);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+      max-width: 14ch;
+    }
+    h2 { font-size: clamp(28px, 4vw, 40px); letter-spacing: -0.015em; margin-bottom: 16px; max-width: 22ch; }
+    h3 { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+
+    p { margin: 0 0 16px; color: var(--text-secondary); }
+    p.lead { font-size: clamp(17px, 1.6vw, 20px); color: var(--text-secondary); margin-bottom: 32px; max-width: 56ch; }
+    p.body { max-width: 64ch; }
+
+    .label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    /* ---------- Header ---------- */
+    header.site {
+      padding: 24px 0;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(11, 15, 20, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 10;
+    }
+    .wordmark {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      font-size: 22px;
+      letter-spacing: -0.015em;
+      color: var(--text-primary);
+    }
+    .wordmark:hover { color: var(--text-primary); }
+    .wordmark svg { width: 22px; height: 22px; }
+
+    /* ---------- Email form ---------- */
+    .email-form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-width: 480px;
+    }
+    @media (min-width: 600px) { .email-form { flex-direction: row; gap: 8px; } }
+    .email-form input[type="email"] {
+      flex: 1;
+      background: var(--surface);
+      border: 1px solid var(--border-strong);
+      border-radius: 8px;
+      padding: 14px 16px;
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 16px;
+      transition: border-color 150ms var(--ease), background 150ms var(--ease);
+    }
+    .email-form input[type="email"]::placeholder { color: var(--text-muted); }
+    .email-form input[type="email"]:hover { border-color: #364152; }
+    .email-form input[type="email"]:focus,
+    .email-form input[type="email"]:focus-visible {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(240, 229, 75, 0.15);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--accent);
+      color: var(--bg);
+      border: 1px solid var(--accent);
+      border-radius: 8px;
+      padding: 14px 24px;
+      font-family: inherit;
+      font-weight: 600;
+      font-size: 15px;
+      letter-spacing: -0.005em;
+      transition: background 150ms var(--ease), transform 80ms var(--ease);
+      white-space: nowrap;
+    }
+    .btn:hover { background: var(--accent-hover); border-color: var(--accent-hover); color: var(--bg); }
+    .btn:active { background: var(--accent-press); transform: translateY(1px); }
+    .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+    .form-fineprint { font-size: 13px; color: var(--text-muted); margin-top: 8px; max-width: 480px; }
+
+    .honey {
+      position: absolute !important;
+      left: -10000px !important;
+      top: auto !important;
+      width: 1px !important;
+      height: 1px !important;
+      overflow: hidden !important;
+    }
+
+    /* ---------- Cards ---------- */
+    .cards-row {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: 1fr;
+      margin-top: 32px;
+    }
+    @media (min-width: 768px) {
+      .cards-row.three { grid-template-columns: repeat(3, 1fr); }
+      .cards-row.four { grid-template-columns: repeat(2, 1fr); }
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      transition: border-color 200ms var(--ease), transform 200ms var(--ease);
+    }
+    .card:hover { border-color: var(--border-strong); }
+    .card-eyebrow {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .card p { margin-bottom: 0; font-size: 15px; line-height: 1.5; }
+
+    /* ---------- Numbers callout ---------- */
+    .data-callout {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 24px;
+      margin: 32px 0 0;
+    }
+    .data-readout {
+      font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: clamp(13px, 1.5vw, 17px);
+      font-weight: 500;
+      color: var(--text-primary);
+      line-height: 1.7;
+      letter-spacing: -0.005em;
+      font-variant-numeric: tabular-nums;
+    }
+    .data-readout .num { color: var(--accent); }
+    .data-caption { margin: 16px 0 0; font-size: 14px; color: var(--text-muted); font-style: italic; }
+
+    /* ---------- Pricing ---------- */
+    .pricing-cards {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-top: 32px;
+    }
+    @media (min-width: 768px) { .pricing-cards { grid-template-columns: repeat(3, 1fr); } }
+
+    .pricing-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 200ms var(--ease);
+    }
+    .pricing-card:hover { border-color: var(--border-strong); }
+    .pricing-card.featured { border-color: var(--accent); }
+    .pricing-card.featured:hover { border-color: var(--accent-hover); }
+
+    .tier-name {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .pricing-card.featured .tier-name { color: var(--accent); }
+    .price {
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 36px;
+      font-weight: 500;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+      font-variant-numeric: tabular-nums;
+    }
+    .price-unit { font-size: 14px; color: var(--text-muted); }
+    .pricing-card p { font-size: 14px; flex: 1; }
+    .cta-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 20px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--accent);
+    }
+    .cta-link:hover { color: var(--accent-hover); }
+    .pricing-fineprint { font-size: 13px; color: var(--text-muted); margin-top: 24px; text-align: center; }
+
+    /* ---------- Founder ---------- */
+    .founder { max-width: 720px; }
+    .founder p { color: var(--text-secondary); font-size: 17px; line-height: 1.7; }
+    .founder p a { color: var(--text-primary); border-bottom: 1px solid var(--border-strong); transition: border-color 150ms var(--ease); }
+    .founder p a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+    /* ---------- Second signup ---------- */
+    .signup-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 40px 24px;
+      text-align: center;
+      margin: 0 auto;
+      max-width: 720px;
+      position: relative;
+      overflow: hidden;
+    }
+    @media (min-width: 768px) { .signup-block { padding: 56px 40px; } }
+    .signup-block::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      background:
+        linear-gradient(135deg, rgba(240, 229, 75, 0.05) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .signup-block > * { position: relative; }
+    .signup-block .email-form { margin: 0 auto; max-width: 480px; }
+    .signup-block h2 { margin-bottom: 24px; max-width: none; }
+
+    /* ---------- FAQ (native <details>) ---------- */
+    .faq-list { margin-top: 32px; max-width: 800px; }
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+    }
+    .faq-item summary {
+      list-style: none;
+      cursor: pointer;
+      width: 100%;
+      color: var(--text-primary);
+      font-family: inherit;
+      font-weight: 600;
+      font-size: 17px;
+      letter-spacing: -0.005em;
+      padding: 20px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      transition: color 150ms var(--ease);
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary:hover { color: var(--accent); }
+    .faq-item summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+    .faq-item summary::after {
+      content: '+';
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--text-muted);
+      transition: color 150ms var(--ease), transform 200ms var(--ease);
+      flex: 0 0 auto;
+    }
+    .faq-item[open] summary::after { content: '−'; color: var(--accent); }
+    .faq-answer { padding: 0 0 20px; font-size: 16px; line-height: 1.6; color: var(--text-secondary); }
+    .faq-answer p { margin: 0; }
+
+    /* ---------- Footer ---------- */
+    footer.site { border-top: 1px solid var(--border); padding: 40px 0; }
+    .footer-row {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    @media (min-width: 768px) {
+      .footer-row { flex-direction: row; justify-content: space-between; align-items: center; }
+    }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 24px; font-size: 14px; color: var(--text-muted); }
+    .footer-copy { font-size: 13px; color: var(--text-muted); }
+
+    /* ---------- Hero (AcmeHero-inspired) ---------- */
+    .hero-shell {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+    @media (min-width: 768px) { .hero-shell { padding: 0 24px; } }
+
+    .hero-nav {
+      position: relative;
+      margin-top: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px 8px 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.35), 0 4px 8px rgba(0,0,0,0.25);
+    }
+    .hero-nav-left { display: flex; align-items: center; gap: 24px; }
+    .hero-nav-links { display: none; align-items: center; gap: 22px; font-size: 14px; }
+    @media (min-width: 768px) { .hero-nav-links { display: flex; } }
+    .hero-nav-links a {
+      color: rgba(154, 165, 177, 0.65);
+      transition: color 150ms var(--ease);
+    }
+    .hero-nav-links a:hover { color: var(--text-primary); }
+
+    .hero-nav-right { display: flex; align-items: center; gap: 10px; }
+    .hero-nav-divider {
+      width: 1px;
+      height: 22px;
+      background: var(--border-strong);
+    }
+    .hero-nav-signin {
+      display: none;
+      font-size: 13px;
+      color: rgba(154, 165, 177, 0.7);
+      padding: 6px 8px;
+      border-radius: 8px;
+      transition: color 150ms var(--ease), background 150ms var(--ease);
+    }
+    .hero-nav-signin:hover { color: var(--text-primary); background: rgba(255,255,255,0.04); }
+    @media (min-width: 768px) { .hero-nav-signin { display: inline-flex; } }
+    .hero-nav-cta {
+      display: inline-flex;
+      align-items: center;
+      height: 30px;
+      padding: 0 14px;
+      background: var(--text-primary);
+      color: var(--bg);
+      font-size: 13px;
+      font-weight: 500;
+      border-radius: 9999px;
+      transition: background 150ms var(--ease), color 150ms var(--ease);
+      white-space: nowrap;
+    }
+    .hero-nav-cta:hover { background: rgba(244,245,247,0.92); color: var(--bg); }
+
+    /* Hero block */
+    .hero-block {
+      padding: 64px 0 80px;
+      text-align: center;
+    }
+    @media (min-width: 768px) { .hero-block { padding: 96px 0 96px; } }
+    @media (min-width: 1024px) { .hero-block { padding: 120px 0 96px; } }
+
+    .hero-headline {
+      font-size: clamp(36px, 6.4vw, 76px);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      line-height: 1.04;
+      margin: 0 auto 24px;
+      max-width: 14ch;
+      color: var(--text-primary);
+    }
+
+    .hero-sub {
+      font-size: clamp(16px, 1.6vw, 22px);
+      color: var(--text-secondary);
+      max-width: 38rem;
+      margin: 0 auto 36px;
+      line-height: 1.5;
+    }
+    .hero-sub strong { color: var(--text-primary); font-weight: 600; }
+
+    .hero-cta-row {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      max-width: 520px;
+      margin: 0 auto 28px;
+    }
+    @media (min-width: 600px) {
+      .hero-cta-row { flex-direction: row; gap: 12px; justify-content: center; }
+    }
+    .hero-cta-row .email-form { flex: 1; max-width: 420px; margin: 0; }
+
+    .hero-cta-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 22px;
+      border: 1px solid var(--border-strong);
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+      background: transparent;
+      transition: border-color 150ms var(--ease), background 150ms var(--ease);
+      white-space: nowrap;
+    }
+    .hero-cta-secondary:hover {
+      color: var(--text-primary);
+      border-color: var(--text-secondary);
+      background: rgba(255,255,255,0.02);
+    }
+
+    .hero-kicker {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      margin: 24px auto 4px;
+      font-size: 13px;
+    }
+    .hero-kicker .accent { color: var(--accent); }
+    .hero-kicker .muted { color: rgba(154,165,177,0.65); }
+    .hero-kicker .sep { color: var(--text-muted); }
+
+    .hero-kicker-sub {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin: 0 0 56px;
+    }
+
+    /* Full-width preview frame */
+    .hero-preview-wide {
+      width: 100%;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 0 16px 80px;
+    }
+    @media (min-width: 768px) { .hero-preview-wide { padding: 0 24px 96px; } }
+    @media (min-width: 1024px) { .hero-preview-wide { padding: 0 32px 120px; } }
+
+    /* Hero dashboard image (replaces the old weekly-grid mockup) */
+    .hero-image-wrap {
+      position: relative;
+      width: 100%;
+      isolation: isolate;
+    }
+    .hero-image-glow {
+      position: absolute;
+      inset: -8% -4% -10% -4%;
+      z-index: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(60% 50% at 50% 60%, rgba(240, 229, 75, 0.10) 0%, transparent 70%),
+        radial-gradient(40% 40% at 30% 30%, rgba(240, 229, 75, 0.06) 0%, transparent 70%),
+        radial-gradient(50% 40% at 75% 70%, rgba(91, 255, 140, 0.04) 0%, transparent 70%);
+      filter: blur(60px);
+      opacity: 0.85;
+    }
+    .hero-image {
+      position: relative;
+      z-index: 1;
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      box-shadow:
+        0 50px 100px -20px rgba(0, 0, 0, 0.75),
+        0 20px 40px -10px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(255, 255, 255, 0.02) inset;
+    }
+    @media (min-width: 1024px) {
+      .hero-image { border-radius: 20px; }
+    }
+
+
+    /* Subtle entrance animation (mimics motion/react fade-up) */
+    @keyframes heroFadeUp {
+      from { opacity: 0; transform: translate3d(0, 20px, 0); }
+      to   { opacity: 1; transform: translate3d(0, 0, 0); }
+    }
+    .fade-up {
+      opacity: 0;
+      animation: heroFadeUp 0.6s ease-out forwards;
+    }
+    .fade-up-1 { animation-delay: 0.10s; }
+    .fade-up-2 { animation-delay: 0.20s; }
+    .fade-up-3 { animation-delay: 0.30s; }
+    .fade-up-4 { animation-delay: 0.40s; }
+    .fade-up-5 { animation-delay: 0.50s; }
+    .fade-up-6 { animation-delay: 0.65s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .fade-up { opacity: 1; animation: none; transform: none; }
+    }
+
+    /* ---------- Reduced motion ---------- */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <!-- 1. Hero (AcmeHero-inspired) -->
+    <div class="hero-shell">
+      <!-- Inner rounded nav -->
+      <nav class="hero-nav fade-up fade-up-1" aria-label="Primary">
+        <div class="hero-nav-left">
+          <a href="/" class="wordmark" aria-label="Forgr home">
+            <svg viewBox="0 0 100 100" aria-hidden="true">
+              <path d="M12 12 L66 12 L88 34 L88 42 L34 42 L34 54 L62 54 L62 66 L34 66 L34 88 L12 88 Z" fill="#F0E54B" />
+            </svg>
+            <span>forgr</span>
+          </a>
+          <div class="hero-nav-links">
+            <a href="#product">Product</a>
+            <a href="#wedge">Why</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#faq">FAQ</a>
+          </div>
+        </div>
+        <div class="hero-nav-right">
+          <a href="#second-signup" class="hero-nav-cta">Get early access</a>
+        </div>
+      </nav>
+
+      <!-- Hero content -->
+      <section id="top" class="hero-block" aria-label="Hero">
+        <h1 class="hero-headline fade-up fade-up-2">The All-In-One Coaching Platform For Hybrid Athletes.</h1>
+        <p class="hero-sub fade-up fade-up-3">
+          Hyrox-native. <strong>Hybrid programming</strong> in one weekly view. AI-assisted plan adjustments. <strong>Wearable-agnostic</strong>.
+        </p>
+      </section>
+    </div>
+
+    <!-- Hero dashboard graphic -->
+    <div class="hero-preview-wide fade-up fade-up-4">
+      <div class="hero-image-wrap">
+        <div class="hero-image-glow" aria-hidden="true"></div>
+        <img
+          src="dashboard-mockup.png"
+          alt="forgr coach dashboard — Maria Chen, Week 17. Weekly hybrid plan with run, lift, and station sessions, weekly volume readouts, AI suggestions, athlete status, and a synced mobile companion view."
+          class="hero-image"
+          width="2400"
+          height="1500"
+          loading="eager"
+          decoding="async"
+        />
+      </div>
+    </div>
+
+    <!-- 2. Problem -->
+    <section>
+      <div class="container">
+        <div class="label">The problem</div>
+        <h2>Your tools weren't built for hybrid athletes.</h2>
+        <p class="body">TrainingPeaks ingests your runs but doesn't know what a sled push is. TrueCoach handles your strength blocks but breaks the moment you program a threshold session. FITR does both — badly, in two views that don't talk to each other. Coaches end up reconciling three tools into a spreadsheet on Sunday night. We're building the tool that means you don't.</p>
+        <div class="cards-row three">
+          <div class="card">
+            <div class="card-eyebrow">TrainingPeaks</div>
+            <p>Endurance gold standard. Cannot do sets/reps.</p>
+          </div>
+          <div class="card">
+            <div class="card-eyebrow">TrueCoach</div>
+            <p>Lifts work fine. Pace zones don't exist.</p>
+          </div>
+          <div class="card">
+            <div class="card-eyebrow">FITR</div>
+            <p>Both, badly. Multi-coach admin is broken.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Product -->
+    <section id="product">
+      <div class="container">
+        <div class="label">What we're building</div>
+        <h2>One coach app. One weekly view. Built for the way you actually program.</h2>
+        <div class="cards-row four">
+          <div class="card">
+            <h3>Hybrid programming, one view</h3>
+            <p>Run, lift, and station work in a single weekly grid. The bottom bar reads endurance minutes, strength tonnage, and station volume — at the same time, for the same week. The view TrainingPeaks can't make.</p>
+          </div>
+          <div class="card">
+            <h3>AI weekly plan adjustments</h3>
+            <p>An athlete misses Tuesday's threshold. Open the app. See three suggested rebalances with reasoning. Tap to approve. The plan updates. The athlete gets pinged. You go back to coaching.</p>
+          </div>
+          <div class="card">
+            <h3>Movement library, demos that don't embarrass you</h3>
+            <p>50+ Hyrox and hybrid movements with clean, looping animated demos. Three coaching cues per movement, overridable per athlete. No more "Google sandbag lunges, see what comes up."</p>
+          </div>
+          <div class="card">
+            <h3>Wearable-agnostic</h3>
+            <p>Garmin and Strava in v1. Apple Watch, Coros, Polar, Whoop on the roadmap. Your athletes wear what they wear. Your view stays unified.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. The wedge -->
+    <section id="wedge">
+      <div class="container">
+        <div class="label">The wedge</div>
+        <h2>Hybrid programming isn't endurance plus strength. It's a constraint problem.</h2>
+        <p class="body">Running compromises strength adaptation. Heavy lifting compromises run quality. Station work eats both. The coach's job is to balance all of it inside a week without overtraining the athlete. Every existing tool forces a choice — and breaks at the boundary. We don't.</p>
+        <div class="data-callout" aria-label="Example weekly volume readout">
+          <div class="data-readout">
+            <span class="num">240</span> Z2 min &nbsp;·&nbsp; <span class="num">32</span> Z3 min &nbsp;·&nbsp; <span class="num">18</span> sets squat &nbsp;·&nbsp; <span class="num">22</span> hinge &nbsp;·&nbsp; <span class="num">14</span> push &nbsp;·&nbsp; <span class="num">14</span> pull &nbsp;·&nbsp; <span class="num">35</span> min station
+          </div>
+          <p class="data-caption">— a single week, in a single readout, in a single view.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Pricing -->
+    <section id="pricing">
+      <div class="container">
+        <div class="label">Pricing</div>
+        <h2>Flat per coach. No per-athlete fees. No revenue cut.</h2>
+        <div class="pricing-cards">
+          <div class="pricing-card featured">
+            <div class="tier-name">Free for first 10</div>
+            <div class="price">$0</div>
+            <p>Six months free for design partners. Weekly call with founder. Build the product with us.</p>
+            <a href="#second-signup" class="cta-link">Apply →</a>
+          </div>
+          <div class="pricing-card">
+            <div class="tier-name">Coach</div>
+            <div class="price">$99<span class="price-unit">/mo</span></div>
+            <p>Up to 25 athletes. White-label athlete app. Wearable sync. AI adjustments. Everything in v1.</p>
+            <a href="#second-signup" class="cta-link">Get notified at launch →</a>
+          </div>
+          <div class="pricing-card">
+            <div class="tier-name">Gym</div>
+            <div class="price">$179<span class="price-unit">/mo</span></div>
+            <p>Unlimited athletes. Multi-coach workspace. Roles + permissions. Same features. Same flat price.</p>
+            <a href="#second-signup" class="cta-link">Get notified at launch →</a>
+          </div>
+        </div>
+        <p class="pricing-fineprint">20% off annual. No per-athlete fees. No revenue cut. Cancel anytime.</p>
+      </div>
+    </section>
+
+    <!-- 6. Founder -->
+    <section>
+      <div class="container">
+        <div class="label">Who's building this</div>
+        <h2>Built by a coach who needed it.</h2>
+        <div class="founder">
+          <p>I'm Drew. I run <a href="https://outpacestrategygroup.com" target="_blank" rel="noopener noreferrer">Outpace Strategy Group</a> and Nameless Run Club / Nameless Classic. I program hybrid weeks for the athletes I coach, and I've used FITR, TrainingPeaks, and a Sunday-night spreadsheet for three years. None of it scaled past 30 athletes without something breaking. Forgr is the tool I would buy.</p>
+          <p>We're pre-alpha. No code is shipping today. The first 10 design-partner coaches will help build the product with me — weekly calls, real feedback, real influence on what gets shipped. The thing I'm building, I want to use myself. If that resonates, drop your email and let's talk.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. Second signup -->
+    <section id="second-signup">
+      <div class="container">
+        <div class="signup-block">
+          <h2>If your week has both run and lift in it, this is for you.</h2>
+          <form class="email-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+            <label for="email-footer" class="visually-hidden">Email address</label>
+            <input id="email-footer" type="email" name="email" required placeholder="you@yourgym.com" autocomplete="email" />
+            <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="honey" aria-hidden="true" />
+            <input type="hidden" name="_source" value="second" />
+            <button class="btn" type="submit">Get early access</button>
+          </form>
+          <p class="form-fineprint" style="margin-top: 16px; margin-left: auto; margin-right: auto; max-width: 480px;">We won't send marketing email. You'll hear from us when the alpha opens — 8–12 weeks out.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. FAQ -->
+    <section id="faq">
+      <div class="container">
+        <div class="label">FAQ</div>
+        <h2>Predictable questions, honest answers.</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>When does it launch?</summary>
+            <div class="faq-answer"><p>Alpha to 5 design partners around mid-July 2026. Paid beta around mid-August. We're prioritizing depth with a few coaches over surface area with many.</p></div>
+          </details>
+          <details class="faq-item">
+            <summary>What does it integrate with at launch?</summary>
+            <div class="faq-answer"><p>Garmin Connect and Strava for wearable data. Stripe for billing. Apple Watch (HealthKit), Coros, Polar, Whoop, and Amazfit are on the roadmap, not in v1.</p></div>
+          </details>
+          <details class="faq-item">
+            <summary>How is this different from FITR / Edge / Runna?</summary>
+            <div class="faq-answer"><p>FITR is the official Hyrox coach software but built for selling pre-made programs at scale, not for high-touch hybrid coaching. Edge and Runna are athlete apps — coaches don't pay for them, athletes do. Forgr is built for coaches who run a roster, ingest wearable data, and adjust plans week to week.</p></div>
+          </details>
+          <details class="faq-item">
+            <summary>Who's behind this?</summary>
+            <div class="faq-answer"><p>Drew Amunategui — Outpace Strategy Group and Nameless Run Club / Nameless Classic. Building solo through alpha; will hire after the first paying-coach milestone.</p></div>
+          </details>
+          <details class="faq-item">
+            <summary>Can my athletes use this without a coach?</summary>
+            <div class="faq-answer"><p>Not in v1. Forgr is built around the coach-athlete relationship — the athlete app is the white-labeled extension of what the coach sets up. If you're an athlete looking for a self-coached app, Edge and Runna are good options.</p></div>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site">
+    <div class="container">
+      <div class="footer-row">
+        <a href="/" class="wordmark" aria-label="Forgr home" style="font-size:18px;">
+          <svg viewBox="0 0 100 100" aria-hidden="true" style="width:18px;height:18px;">
+            <path d="M12 12 L66 12 L88 34 L88 42 L34 42 L34 54 L62 54 L62 66 L34 66 L34 88 L12 88 Z" fill="#F0E54B" />
+          </svg>
+          <span>forgr</span>
+        </a>
+        <div class="footer-links">
+          <a href="mailto:info@outpacestrategygroup.com">Contact</a>
+          <a href="https://instagram.com/drewtegui" target="_blank" rel="noopener noreferrer">@drewtegui</a>
+          <a href="https://outpacestrategygroup.com" target="_blank" rel="noopener noreferrer">Outpace</a>
+        </div>
+        <div class="footer-copy">© 2026 Forgr. Built by Outpace Strategy Group.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // PostHog: capture form submission events when the snippet above is uncommented.
+    document.querySelectorAll('.email-form').forEach(form => {
+      form.addEventListener('submit', () => {
+        if (window.posthog && typeof window.posthog.capture === 'function') {
+          var src = form.querySelector('input[name="_source"]')?.value || 'unknown';
+          window.posthog.capture('email_signup', { source: src });
+        }
+      });
+    });
+
+  </script>
+</body>
+</html>
