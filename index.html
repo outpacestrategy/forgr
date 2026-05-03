@@ -501,6 +501,81 @@
     .ip-dot.rest { background: var(--text-muted); }
     .ip-detail { color: var(--text-muted); margin-left: auto; font-variant-numeric: tabular-nums; font-size: 8px; }
 
+    /* iPhone — AI suggestions screen (card 2) */
+    .ip-badge {
+      background: var(--accent);
+      color: var(--bg);
+      font-size: 7px;
+      font-weight: 800;
+      padding: 2px 5px;
+      border-radius: 4px;
+      letter-spacing: 0.06em;
+    }
+    .ip-banner {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(240, 229, 75, 0.08);
+      border: 1px solid rgba(240, 229, 75, 0.22);
+      border-radius: 7px;
+      margin: 8px 10px;
+      padding: 7px 9px;
+    }
+    .ip-banner-icon {
+      width: 16px; height: 16px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: var(--bg);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      font-weight: 800;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+    .ip-banner-text { line-height: 1.3; min-width: 0; }
+    .ip-banner-text strong { font-size: 9px; font-weight: 700; display: block; }
+    .ip-banner-text small { color: var(--text-muted); font-size: 7.5px; margin-top: 1px; display: block; }
+    .ip-suggest-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 4px 10px 10px;
+      flex: 1;
+      overflow: hidden;
+    }
+    .ip-suggest {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: 7px 9px;
+    }
+    .ip-suggest-title {
+      font-size: 9.5px;
+      font-weight: 700;
+      margin-bottom: 3px;
+      letter-spacing: -0.005em;
+    }
+    .ip-suggest-why {
+      font-size: 7.5px;
+      color: var(--text-muted);
+      line-height: 1.35;
+      margin-bottom: 6px;
+    }
+    .ip-suggest-actions { display: flex; gap: 4px; }
+    .ip-apply, .ip-skip {
+      font-size: 7.5px;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 999px;
+      flex: 1;
+      text-align: center;
+      letter-spacing: 0.01em;
+    }
+    .ip-apply { background: var(--accent); color: var(--bg); }
+    .ip-skip { background: transparent; color: var(--text-secondary); border: 1px solid var(--border); }
+
     /* ---------- Fit check ---------- */
     .fit-sub {
       color: var(--text-secondary);
@@ -1091,6 +1166,61 @@
             <p>Run, lift, and station work in a single weekly grid. The bottom bar reads endurance minutes, strength tonnage, and station volume — at the same time, for the same week. The view TrainingPeaks can't make.</p>
           </div>
           <div class="card">
+            <div class="iphone-mock" aria-hidden="true">
+              <div class="iphone-frame">
+                <div class="iphone-screen">
+                  <div class="ip-statusbar">
+                    <span class="ip-time">9:41</span>
+                    <span class="ip-icons">
+                      <svg viewBox="0 0 18 10"><rect x="0" y="6" width="3" height="4" rx="0.5"/><rect x="4" y="4" width="3" height="6" rx="0.5"/><rect x="8" y="2" width="3" height="8" rx="0.5"/><rect x="12" y="0" width="3" height="10" rx="0.5"/></svg>
+                      <svg viewBox="0 0 14 10"><path d="M7 0a9 9 0 0 0-7 3.4l1 1A7.5 7.5 0 0 1 7 1.5a7.5 7.5 0 0 1 6 2.9l1-1A9 9 0 0 0 7 0Zm0 3a6 6 0 0 0-4.6 2.2l1 1A4.5 4.5 0 0 1 7 4.5a4.5 4.5 0 0 1 3.6 1.7l1-1A6 6 0 0 0 7 3Zm0 3a3 3 0 0 0-2.2 1l2.2 2.2L9.2 7A3 3 0 0 0 7 6Z"/></svg>
+                      <svg viewBox="0 0 18 10"><rect x="0.5" y="0.5" width="14" height="9" rx="2" fill="none" stroke="currentColor" stroke-width="1"/><rect x="2" y="2" width="11" height="6" rx="1"/><rect x="15" y="3" width="1.5" height="4" rx="0.5"/></svg>
+                    </span>
+                  </div>
+                  <div class="ip-header">
+                    <div class="ip-back">‹</div>
+                    <div class="ip-title-block">
+                      <div class="ip-name">AI Suggestions</div>
+                      <div class="ip-week-label">Week 17 · 3 new</div>
+                    </div>
+                    <div class="ip-badge">AI</div>
+                  </div>
+                  <div class="ip-banner">
+                    <div class="ip-banner-icon">!</div>
+                    <div class="ip-banner-text">
+                      <strong>Maria missed Threshold</strong>
+                      <small>Tue · 8×800 @ 4:25/km</small>
+                    </div>
+                  </div>
+                  <div class="ip-suggest-list">
+                    <div class="ip-suggest">
+                      <div class="ip-suggest-title">Move to Thursday</div>
+                      <div class="ip-suggest-why">Mon Z2 RPE elevated. +24h recovery before strength.</div>
+                      <div class="ip-suggest-actions">
+                        <span class="ip-apply">Apply</span>
+                        <span class="ip-skip">Skip</span>
+                      </div>
+                    </div>
+                    <div class="ip-suggest">
+                      <div class="ip-suggest-title">Drop to 6×800</div>
+                      <div class="ip-suggest-why">Trim 25% volume to fit the same week.</div>
+                      <div class="ip-suggest-actions">
+                        <span class="ip-apply">Apply</span>
+                        <span class="ip-skip">Skip</span>
+                      </div>
+                    </div>
+                    <div class="ip-suggest">
+                      <div class="ip-suggest-title">Skip this week</div>
+                      <div class="ip-suggest-why">Race Saturday. Detune intensity, hold volume.</div>
+                      <div class="ip-suggest-actions">
+                        <span class="ip-apply">Apply</span>
+                        <span class="ip-skip">Skip</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
             <h3>AI weekly plan adjustments</h3>
             <p>An athlete misses Tuesday's threshold. Open the app. See three suggested rebalances with reasoning. Tap to approve. The plan updates. The athlete gets pinged. You go back to coaching.</p>
           </div>
