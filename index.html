@@ -610,19 +610,25 @@
     @media (min-width: 1024px) { .hero-block { padding: 120px 0 96px; } }
 
     .hero-headline {
-      font-size: clamp(36px, 6.4vw, 76px);
+      font-size: clamp(28px, 5.6vw, 68px);
       font-weight: 700;
       letter-spacing: -0.025em;
-      line-height: 1.04;
+      line-height: 1.08;
       margin: 0 auto 24px;
-      max-width: 14ch;
+      max-width: 22ch;
       color: var(--text-primary);
+      text-wrap: balance;
+    }
+    .hero-headline em {
+      font-style: italic;
+      font-weight: inherit;
+      color: var(--accent);
     }
 
     .hero-sub {
       font-size: clamp(16px, 1.6vw, 22px);
       color: var(--text-secondary);
-      max-width: 38rem;
+      max-width: 42rem;
       margin: 0 auto 36px;
       line-height: 1.5;
     }
@@ -784,9 +790,13 @@
 
       <!-- Hero content -->
       <section id="top" class="hero-block" aria-label="Hero">
-        <h1 class="hero-headline fade-up fade-up-2">The All-In-One Coaching Platform For Hybrid Athletes.</h1>
+        <h1 class="hero-headline fade-up fade-up-2">
+          Garmin makes the watch.<br />
+          Strava holds the data.<br />
+          <em>Forgr is where Hyrox coaches build their business.</em>
+        </h1>
         <p class="hero-sub fade-up fade-up-3">
-          Hyrox-native. <strong>Hybrid programming</strong> in one weekly view. AI-assisted plan adjustments. <strong>Wearable-agnostic</strong>.
+          The coaching OS for <strong>Hyrox coaches</strong> running 15 to 60 athletes — in-person, online, or both. Without the spreadsheet, the WhatsApp threads, or the <strong>shared FITR login</strong>.
         </p>
       </section>
     </div>
